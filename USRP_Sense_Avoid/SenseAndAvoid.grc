@@ -1,0 +1,949 @@
+options:
+  parameters:
+    author: Sebastian
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: Sense_And_Avoid
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Sense_And_Avoid
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: Freq_lvl
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Freq_lvl
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: -1.0e6
+    step: '1000'
+    stop: -500e3
+    value: -639e3
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [645, 31]
+    rotation: 0
+    state: true
+- name: activate_txer_fhss
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: activate_txer_fhss
+    label0: Activate
+    label1: Activate
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '1'
+    option0: '1'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QHBoxLayout
+    type: int
+    value: '1'
+    widget: radio_buttons
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [39, 462]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 4.8e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [185, 12]
+    rotation: 0
+    state: enabled
+- name: variable_function_probe_0
+  id: variable_function_probe
+  parameters:
+    block_id: epy_block_0_0
+    comment: ''
+    function_args: activate_txer_fhss
+    function_name: change_channel
+    poll_rate: '1'
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [17, 348]
+    rotation: 0
+    state: enabled
+- name: vol_lvl
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.0015'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 29]
+    rotation: 0
+    state: true
+- name: SubbandFilterBank_0
+  id: SubbandFilterBank
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1122, 104]
+    rotation: 0
+    state: true
+- name: analog_frequency_modulator_fc_0
+  id: analog_frequency_modulator_fc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    sensitivity: 2*math.pi*(5e3)/samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [423, 204]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_0
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '0.8'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1320, 134]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_1
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '0.4'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1321, 81]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_2
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1326, 272]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_3
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '1.6'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1322, 231]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_4
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '1.2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1321, 182]
+    rotation: 0
+    state: enabled
+- name: blocks_complex_to_float_0
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1475, 52]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_float_1
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1430, 253]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_float_2
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1483, 117]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_float_3
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1444, 333]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_float_4
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1467, 174]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_1_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: vol_lvl
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [783, 216]
+    rotation: 0
+    state: enabled
+- name: blocks_throttle_0_0
+  id: blocks_throttle
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [922, 194]
+    rotation: 0
+    state: enabled
+- name: blocks_wavfile_source_0
+  id: blocks_wavfile_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    file: /home/seb/Documents/TestingFreqHop/hairdryer.wav
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nchan: '1'
+    repeat: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [-1, 186]
+    rotation: 0
+    state: enabled
+- name: epy_block_0_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.sync_block):  # other\
+      \ base classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block example - a simple multiply const\"\"\"\n\n    def __init__(self):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n         \
+      \   self,\n            name='Embedded Python Block',   # will show up in GRC\n\
+      \            in_sig=None,\n            out_sig=None\n        )\n        # if\
+      \ an attribute with the same name as a parameter is found,\n        # a callback\
+      \ is registered (properties work, too).\n        self.message_port_register_out(pmt.intern(\"\
+      freq\"))\n        self.centerFreq = 0.0\n        self.channel = 0\n\n    def\
+      \ work(self, activate_txer_fhss):\n        self.channel = (self.channel + 3)%8\n\
+      \        if not activate_txer_fhss:\n            P_freq_cmd = pmt.cons(pmt.string_to_symbol(\"\
+      freq\"), pmt.from_double(0))\n            self.message_port_pub(pmt.intern(\"\
+      freq\"), output_items)\n            return\n        freq = self.channel * -200e3\n\
+      \        output_items = pmt.cons(pmt.string_to_symbol(\"freq\"), pmt.from_double(freq))\n\
+      \        self.message_port_pub(pmt.intern(\"freq\"), output_items)\n       \
+      \ return output_items\n\n    def change_channel(self, activate_txer_fhss):\n\
+      \        self.channel = (self.channel + 1)%5\n        if not activate_txer_fhss:\n\
+      \            P_freq_cmd = pmt.cons(pmt.string_to_symbol(\"freq\"), pmt.from_double(0))\n\
+      \            self.message_port_pub(pmt.intern(\"freq\"), P_freq_cmd)\n     \
+      \       print(\"hello\")\n            print(activate_txer_fhss)\n          \
+      \  return\n        else:\n            print(\"changing to subband \" + str(self.channel))\n\
+      \            freq = (self.channel * -200e3) + self.centerFreq\n            P_freq_cmd\
+      \ = pmt.cons(pmt.string_to_symbol(\"freq\"), pmt.from_double(freq))\n      \
+      \      self.message_port_pub(pmt.intern(\"freq\"), P_freq_cmd)\n           \
+      \ return 1\n\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Embedded Python Block', 'blk', [], [], [('freq', 'message', 1)],
+      'Embedded Python Block example - a simple multiply const', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 295]
+    rotation: 0
+    state: true
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      import time\nfrom gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other\
+      \ base classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block example - a simple multiply const\"\"\"\n\n    def __init__(self,\
+      \ example_param=1.0):  # only default arguments here\n        \"\"\"arguments\
+      \ to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
+      \            self,\n            name='Embedded Python Block',   # will show\
+      \ up in GRC\n            in_sig=[np.float32, np.float32, np.float32, np.float32,\
+      \ np.float32],\n            out_sig=[np.float32, np.float32, np.float32, np.float32,\
+      \ np.float32]\n        )\n        # if an attribute with the same name as a\
+      \ parameter is found,\n        # a callback is registered (properties work,\
+      \ too).\n        self.example_param = example_param\n        self.counter  =\
+      \ 1\n        self.n        = 400000\n        self.bands    = 5\n        self.ActionsList\
+      \ = self.SelectOnlyContiguousBands(1)\n        self.intf     = [0] * self.bands\n\
+      \        self.decision = [0] * self.bands\n        self.Reward   = 0\n\n\n \
+      \   def work(self, input_items, output_items):\n        \"\"\"example: multiply\
+      \ with constant\"\"\"\n        output_items[0][:] = input_items[0] * self.example_param\n\
+      \        output_items[1][:] = input_items[1] * self.example_param\n        output_items[2][:]\
+      \ = input_items[2] * self.example_param\n        output_items[3][:] = input_items[3]\
+      \ * self.example_param\n        output_items[4][:] = input_items[4] * self.example_param\n\
+      \n        if (output_items[0][0] < 0.77) or (output_items[0][0] > 0.85):\n \
+      \           first = 1\n        else:\n            first = 0\n\n        if output_items[1][0]\
+      \ > 1.7:\n            second = 1\n        else:\n            second = 0\n\n\
+      \        if output_items[2][0] > 2.46:\n            third = 1\n        else:\n\
+      \            third = 0\n\n        if output_items[3][0] > 3.29:\n          \
+      \  fourth = 1\n        else:\n            fourth = 0\n\n\n        if output_items[4][0]\
+      \ > 4.10:\n            fifth = 1\n\n        else:\n            fifth = 0\n \
+      \       #print(self.counter)\n        print(list([first, second, third, fourth,\
+      \ fifth]))\n\n        intf = list([first, second, third, fourth, fifth])\n \
+      \       #decision = self.ThompsonSampling(intf) \n\n\n\n        return len(output_items[0])\n\
+      \n\n    def SelectOnlyContiguousBands(self, a):\n        return a + 2\n\n\n\n\
+      \    def bi2de(self, number):\n        \"\"\"\n        Binary2Decimal\n    \
+      \        Python already has some built in functions that let you do this pretty\
+      \ fast. \n            I may just have to swap the order, this would be done\
+      \ by simply changing a \n            +1 to -1\n\n        Number: a list of 5\
+      \ subbands representing either our action or interferer\n        \"\"\"\n  \
+      \      bi2string = ''.join([str(x) for x in number])\n        return int(bi2string,\
+      \ 2)\n\n\n\n    def de2bi(self, values, bands):\n        \"\"\"\n        Decimal2Binary\n\
+      \        \"\"\"\n        valueList = list([x for x in range(0,(2**bands)-1)])\n\
+      \        finalList = []\n\n        for value in valueList:\n            binary\
+      \ = format(value, 'b')\n            while len(binary) < bands:\n           \
+      \     binary = '0' + binary\n            tempList = list([int(x) for x in binary])\n\
+      \n            finalList.append(tempList)\n\n        return finalList\n\n\n\n\
+      \n    def CalculateReward(self, actionTaken, intfSeen): #(fullAct, state, bands)\n\
+      \        \"\"\"                                           # (decision, intf,\
+      \ bands)\n        Take the input and compare it with the interferer seen.\n\
+      \        \"\"\"\n        bFrac = 1/(self.bands)\n\n        cO         = self.intf\n\
+      \        contigOpen = [1-value for value in self.intf]\n\n        stack   =\
+      \ np.add(np.array(cO), np.array(self.decision)) # change this to action\n  \
+      \                                                              # Taken Maybe\
+      \ idk yet\n        NumCols = sum([1 for value in stack if (value > 1)])\n  \
+      \      NB      = sum([value for value in self.decision]) # change this to actionTaken\
+      \ Maybe ######  \n\n        temp = [value == 1 for value in contigOpen]\n\n\
+      \        f = np.argwhere(np.diff([False] + temp + [False]) == True)\n\n    \
+      \    \"\"\"\n        There must be a better way to do this in python, this feels\
+      \ really inefficient\n        \"\"\"\n        #####################################################################\n\
+      \        tempFirst = np.array([list(f[x]) for x in range(1, len(f), 2)])\n \
+      \       tempSecon = np.array([list(f[x]) for x in range(0, len(f), 2)])\n  \
+      \      subtraction = np.subtract(tempFirst, tempSecon)\n        #####################################################################\n\
+      \n        ix = np.argmax(subtraction)\n        m  = subtraction[ix]\n\n    \
+      \    runstart = f[(2*ix)]\n        longrun  = m\n        runEnd   = runstart\
+      \ + longrun\n\n        opt = [0] * self.bands\n        for i in range(int(runstart),\
+      \ int(runEnd)):\n            opt[i] = 1\n\n        BWdist = np.abs(longrun -\
+      \ NB)\n\n        if NumCols > 0:\n            self.Reward = 0\n        elif\
+      \ BWdist > 0:\n            self.Reward = 1 - (0.1 * BWdist)\n        else:\n\
+      \            self.Reward = 1\n\n        if self.Reward < 0:\n            self.Reward\
+      \ = 0\n\n\n        return NumCols\n\n\n\n    def ThompsonSampling(self, intf):\n\
+      \        allReward = 0\n        print(\"Hello\")\n        k = int((self.bands\
+      \ * (self.bands + 1)) / 2) # arms\n        print(\"hello\")\n        S = 2 **\
+      \ (self.bands)\n        print(\"HELLO?`\")\n        \"\"\"\n        TODO: implement\
+      \ this function\n        \"\"\"\n        #ActionsList = SelectOnlyContiguousBands(de2bi([1:2^(bands)-1],\
+      \ bands))\n\n        \"\"\"     \n        ********************************************************************\n\
+      \        \"\"\"\n\n\n        if self.bands > 10:\n            #intfA = np.zeros([len(intf[:,1]),(self.bands-10)])\n\
+      \            #intf = [intf, intfA]\n            print(\"BAND ERROR DONT GO HERE\
+      \ YET\")\n            raise ValueError(\"Too many bands, don't do this yet\"\
+      )\n\n        d  =  2                #dimensionality\n        B  =  np.identity(d)\
+      \   #prior covariance\n        mu =  [0] * d          #prior mean\n        f\
+      \  =  np.transpose([0] * d)  #prior update\n\n        cSteps = 10\n        plays\
+      \  = np.zeros([k,S])\n        play2  = np.zeros([k,cSteps])\n\n        sumR\
+      \   = np.zeros([k,S])\n        meanR  = np.zeros([k,S])\n        lastR  = np.zeros([k,S])\n\
+      \n        loss  = np.zeros([1,n])\n        col   = np.zeros([1,n])\n\n     \
+      \   context =  np.zeros([k,d])\n        armVal  =  np.zeros([k,1])\n\n     \
+      \   act        = np.zeros([n,bands])\n        reward     = np.zeros([n,1])\n\
+      \        prevAct    = np.ones([1,bands])\n        expD       = np.zeros([k,1])\n\
+      \        best       = np.zeros([n,1])\n        bestArm    = 21\n\n        collision\
+      \       = np.zeros([n,1])\n        missedO         = np.zeros([n,1])\n     \
+      \   numSubsSelected = np.zeros([n,1])\n        state           = intf[1]\n \
+      \       #print(state)\n        count = 1\n\n        \"\"\"\n        **************************************************************************\n\
+      \        I think everything in between the stars should be implemented at the\
+      \ __init__ \n        section because how else would the function learn unless\
+      \ I constantly passed\n        the calculated values back to itself. This way\
+      \ the object keeps track of itself\n        **I think**\n\n        If it wasnt\
+      \ pre-initialized I believe that all these lists would have to be \n       \
+      \ stored in work and then recalled at ThompsonSampling(_,_,_,_,_,_,...) again\n\
+      \        \"\"\"\n\n\n        \"\"\"\n        TODO: this comment\n        \"\"\
+      \"\n        #Sn = bi2de(flip(intf(1,:)))+1\n\n\n\n\n\n\n        \"\"\"#*****************************************************\n\
+      \        Start the Function\n        \"\"\"#*****************************************************\n\
+      \n        for t in range(1,n-1):\n            #target_range(t+1)  = Vr*PRI(t+1)*t+Ro+cn(t+1);\n\
+      \            theta = np.random.multivariate_normal(mu,np.linalg.inv(B))\n\n\
+      \            #Calculate posterior index for each arm\n            for i in range(0,k-1):\n\
+      \                if (plays(i,Sn) > 0):\n                    c1 = meanR[i,Sn]\
+      \ #mean(history(i,Sn,1:plays(i,Sn)));\n                    c2 = lastR[i,Sn]\
+      \ #history(i,Sn,plays(i,Sn));\n                else:\n                    c1\
+      \ = np.random.uniform()\n                    c2 = np.random.uniform()\n\n  \
+      \              context[i,:] = [c1,c2] #arm specific context  \n            \
+      \    armVal[i] = np.dot(context[i,:],theta)\n\n            armVal = list(armVal)\n\
+      \            bestArm = int(armVal.index(max(armVal))) #play arm with highest\
+      \ posterior index\n\n            \"\"\"#*****************************************************\n\
+      \            TODO: this comment\n            \"\"\"#*****************************************************\n\
+      \            #SnP = bi2de(flip(state))+1;\n            SnP = 9\n\n\n\n     \
+      \       prevState = state\n\n            state = intf[t+1]\n\n            if\
+      \ t == 1:\n                count = 1\n            elif prevState == state:\n\
+      \                count = count+1\n            else :\n                count\
+      \ = 1\n\n            \"\"\"#*****************************************************\n\
+      \            TODO: this comment\n            \"\"\"#*****************************************************\n\
+      \            #Sn = bi2de(flip(state))+1;\n            Sn = 10\n\n\n\n\n\n  \
+      \          plays[bestArm,SnP] = plays[bestArm,SnP]+1\n\n            if count\
+      \ <= cSteps:\n                play2[bestArm,count] = play2[bestArm,count] +\
+      \ 1\n            else :\n                play2[bestArm,cSteps] = play2[bestArm,cSteps]\
+      \ + 1\n\n\n            best[t-1] = bestArm\n\n            fullAct = ActionsList[bestArm,:]\n\
+      \            act[t,:] = fullAct\n\n            \"\"\"#*****************************************************\n\
+      \             TODO: this comment\n            \"\"\"#*****************************************************\n\
+      \            #collision[t] = CalculateReward(fullAct,state,bands);\n       \
+      \     reward[t] = 0\n\n\n\n            allReward = allReward + reward[t]\n\n\
+      \n            sumR[bestArm,SnP] = sumR[bestArm,SnP] + reward[t]\n          \
+      \  meanR[bestArm,SnP] = sumR[bestArm,SnP]/plays[bestArm,SnP];\n            lastR[bestArm,SnP]\
+      \ = reward[t];\n            prevAct = fullAct;\n\n            #Update posterior\
+      \ dist\n            B = B + np.transpose(context[bestArm,:])*context[bestArm,:]\n\
+      \            f = f + np.transpose(context[bestArm,:])*reward[t]\n          \
+      \  mu = f/B\n\n            if t > 1:\n                loss[t] = loss[t-1] +\
+      \ (1-reward[t])\n                col[t]  = col[t-1]  + collision[t]\n\n\n  \
+      \      return 0\n\n\n\n\n\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    example_param: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Embedded Python Block', 'blk', [('example_param', '1.0')], [('0',
+      'float', 1), ('1', 'float', 1), ('2', 'float', 1), ('3', 'float', 1), ('4',
+      'float', 1)], [('0', 'float', 1), ('1', 'float', 1), ('2', 'float', 1), ('3',
+      'float', 1), ('4', 'float', 1)], 'Embedded Python Block example - a simple multiply
+      const', ['example_param'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1660, 123]
+    rotation: 0
+    state: enabled
+- name: freq_xlating_fir_filter_xxx_0
+  id: freq_xlating_fir_filter_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    center_freq: '0'
+    comment: ''
+    decim: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    taps: '1'
+    type: ccc
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [531, 268]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [278, 12]
+    rotation: 0
+    state: true
+- name: qtgui_edit_box_msg_0
+  id: qtgui_edit_box_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: ''
+    is_pair: 'True'
+    is_static: 'True'
+    key: freq
+    label: Frequency
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: double
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [283, 323]
+    rotation: 0
+    state: true
+- name: qtgui_time_sink_x_0
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'False'
+    gui_hint: ''
+    label1: Signal 1
+    label10: Signal 10
+    label2: Signal 2
+    label3: Signal 3
+    label4: Signal 4
+    label5: Signal 5
+    label6: Signal 6
+    label7: Signal 7
+    label8: Signal 8
+    label9: Signal 9
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '""'
+    nconnections: '1'
+    size: '2048'
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '1'
+    ymin: '-1'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [807, 316]
+    rotation: 0
+    state: disabled
+- name: qtgui_time_sink_x_1
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'False'
+    gui_hint: ''
+    label1: Signal 1
+    label10: Signal 10
+    label2: Signal 2
+    label3: Signal 3
+    label4: Signal 4
+    label5: Signal 5
+    label6: Signal 6
+    label7: Signal 7
+    label8: Signal 8
+    label9: Signal 9
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '""'
+    nconnections: '5'
+    size: '1024'
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: float
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '1'
+    ymin: '-1'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1906, 86]
+    rotation: 0
+    state: true
+- name: qtgui_waterfall_sink_x_0
+  id: qtgui_waterfall_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    axislabels: 'True'
+    bw: samp_rate
+    color1: '0'
+    color10: '0'
+    color2: '0'
+    color3: '0'
+    color4: '0'
+    color5: '0'
+    color6: '0'
+    color7: '0'
+    color8: '0'
+    color9: '0'
+    comment: ''
+    fc: '0'
+    fftsize: '2048'
+    freqhalf: 'True'
+    grid: 'False'
+    gui_hint: ''
+    int_max: '10'
+    int_min: '-140'
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '""'
+    nconnections: '1'
+    showports: 'False'
+    type: complex
+    update_time: '0.10'
+    wintype: firdes.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [870, 39]
+    rotation: 0
+    state: disabled
+- name: rational_resampler_xxx_0
+  id: rational_resampler_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    decim: '1'
+    fbw: '0'
+    interp: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    taps: ''
+    type: fff
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [222, 173]
+    rotation: 0
+    state: enabled
+
+connections:
+- [SubbandFilterBank_0, '0', blocks_add_const_vxx_1, '0']
+- [SubbandFilterBank_0, '1', blocks_add_const_vxx_0, '0']
+- [SubbandFilterBank_0, '2', blocks_add_const_vxx_4, '0']
+- [SubbandFilterBank_0, '3', blocks_add_const_vxx_3, '0']
+- [SubbandFilterBank_0, '4', blocks_add_const_vxx_2, '0']
+- [analog_frequency_modulator_fc_0, '0', freq_xlating_fir_filter_xxx_0, '0']
+- [blocks_add_const_vxx_0, '0', blocks_complex_to_float_2, '0']
+- [blocks_add_const_vxx_1, '0', blocks_complex_to_float_0, '0']
+- [blocks_add_const_vxx_2, '0', blocks_complex_to_float_3, '0']
+- [blocks_add_const_vxx_3, '0', blocks_complex_to_float_1, '0']
+- [blocks_add_const_vxx_4, '0', blocks_complex_to_float_4, '0']
+- [blocks_complex_to_float_0, '0', epy_block_1, '0']
+- [blocks_complex_to_float_1, '0', epy_block_1, '3']
+- [blocks_complex_to_float_2, '0', epy_block_1, '1']
+- [blocks_complex_to_float_3, '0', epy_block_1, '4']
+- [blocks_complex_to_float_4, '0', epy_block_1, '2']
+- [blocks_multiply_const_vxx_1_0, '0', blocks_throttle_0_0, '0']
+- [blocks_throttle_0_0, '0', SubbandFilterBank_0, '0']
+- [blocks_throttle_0_0, '0', qtgui_waterfall_sink_x_0, '0']
+- [blocks_wavfile_source_0, '0', rational_resampler_xxx_0, '0']
+- [epy_block_0_0, freq, qtgui_edit_box_msg_0, val]
+- [epy_block_1, '0', qtgui_time_sink_x_1, '0']
+- [epy_block_1, '1', qtgui_time_sink_x_1, '1']
+- [epy_block_1, '2', qtgui_time_sink_x_1, '2']
+- [epy_block_1, '3', qtgui_time_sink_x_1, '3']
+- [epy_block_1, '4', qtgui_time_sink_x_1, '4']
+- [freq_xlating_fir_filter_xxx_0, '0', blocks_multiply_const_vxx_1_0, '0']
+- [freq_xlating_fir_filter_xxx_0, '0', qtgui_time_sink_x_0, '0']
+- [qtgui_edit_box_msg_0, msg, freq_xlating_fir_filter_xxx_0, freq]
+- [rational_resampler_xxx_0, '0', analog_frequency_modulator_fc_0, '0']
+
+metadata:
+  file_format: 1
