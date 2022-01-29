@@ -14,7 +14,7 @@ from gnuradio import gr
 class blk(gr.sync_block):  # other base classes are basic_block, decim_block, interp_block
     """Embedded Python Block example - a simple multiply const"""
 
-    def __init__(self, example_param=1.0):  # only default arguments here
+    def __init__(self, example_param=1.0, bands=5, d=2, n=400000, cSteps=10 ):  # only default arguments here
         """arguments to this function show up as parameters in GRC"""
         gr.sync_block.__init__(
             self,
@@ -26,12 +26,45 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
         # a callback is registered (properties work, too).
         self.example_param = example_param
         self.counter  = 1
-        self.n        = 400000
-        self.bands    = 5
+        self.n        = n
+        self.bands    = bands
         self.ActionsList = self.SelectOnlyContiguousBands(1)
-        self.intf     = [0] * self.bands
-        self.decision = [0] * self.bands
+        self.intf     = [0] * bands
+        self.decision = [0] * bands
         self.Reward   = 0
+        
+
+        self.k = int((bands * (bands + 1)) / 2) # arms
+        self.S = 2 ** (bands)
+
+        
+        #d  =  2                #dimensionality
+        self.B  =  np.identity(d)   #prior covariance
+        self.mu =  [0] * d          #prior mean
+        self.f  =  np.transpose([0] * d)  #prior update
+
+        self.cSteps = cSteps
+        self.plays  = np.zeros([self.k,self.S])
+        self.play2  = np.zeros([self.k,cSteps])
+
+        self.sumR   = self.meanR = self.lastR = np.zeros([self.k,self.S])
+
+        self.loss  = self.col   = np.zeros([1,n])
+
+        self.context =  np.zeros([self.k,d])
+        self.armVal  =  np.zeros([self.k,1])
+
+        self.act        = np.zeros([n,bands])
+        self.reward     = np.zeros([n,1])
+        self.prevAct    = np.ones([1,bands])
+        self.expD       = np.zeros([self.k,1])
+        self.best       = np.zeros([n,1])
+        self.bestArm    = 21
+
+        self.collision       = np.zeros([n,1])
+        self.missedO         = np.zeros([n,1])
+        self.numSubsSelected = np.zeros([n,1])
+        self.state           = self.intf
 
 
     def work(self, input_items, output_items):
@@ -68,18 +101,69 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
 
         else:
             fifth = 0
-        #print(self.counter)
-        print(list([first, second, third, fourth, fifth]))
+        
+        #print(list([first, second, third, fourth, fifth]))
 
         intf = list([first, second, third, fourth, fifth])
         #decision = self.ThompsonSampling(intf) 
-
-
+        
 
         return len(output_items[0])
+    
 
+    def NumContiguousOnes(self,a):
+        return 0
 
     def SelectOnlyContiguousBands(self, a):
+        print("YEEEEEEEEEEEEEEEEEEEEEEEHAAAAAAAAAAAWWWWWWWWWWW")
+        import numpy as np
+
+        bands = 5
+
+
+        valueList = list([x for x in range(0,(2**bands))])
+        finalList = []
+
+        for value in valueList:
+            binary = format(value, 'b')
+            while len(binary) < bands:
+                binary = '0' + binary
+            tempList = list([int(x) for x in binary])
+
+            finalList.append(tempList)
+
+        # Now final list has all binary intf values between
+        # [0,0,0,0,0] and [1,1,1,1,1]
+        finalList.reverse()
+        sequence = np.array(finalList[1:len(finalList)])
+        # print(sequence)
+
+        NumContigBands = []
+        for value in sequence:
+
+            temp = [i+1 for i, e in enumerate(value) if e!= 0]
+            temp = [0] + temp + [len(value)+1]
+            NumContigBands.append(max(np.diff(temp)-1))
+        # print(len(NumContigBands))
+        # print(NumContigBands)
+
+        finalList.reverse()
+
+        RowSum = [sum(value) for value in finalList[1:len(finalList)]]
+        # print(len(RowSum))
+        # print(RowSum)
+
+        IdxContiguousSequences = [1 if NumContigBands[i] == RowSum[i] else 0 for i in range(0,len(IdxContiguousSequences))]
+
+        print(IdxContiguousSequences)
+        
+        AllContiguousBands = [finalList[i] for i in range(1,len(finalList)-1) if IdxContiguousSequences[i] == 1]
+        AllContiguousBands.append([1]*bands)
+
+
+        #for value in AllContiguousBands:
+           # print(value)
+
         return a + 2
     
 
@@ -102,7 +186,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
         """
         Decimal2Binary
         """
-        valueList = list([x for x in range(0,(2**bands)-1)])
+        valueList = list([x for x in range(0,(2**bands))])
         finalList = []
 
         for value in valueList:
@@ -240,11 +324,16 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
         stored in work and then recalled at ThompsonSampling(_,_,_,_,_,_,...) again
         """
 
+        
+
+
+
 
         """
         TODO: this comment
         """
-        #Sn = bi2de(flip(intf(1,:)))+1
+        Sn = bi2de(flip(self.intf))+1
+
 
 
 
@@ -274,11 +363,24 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
             armVal = list(armVal)
             bestArm = int(armVal.index(max(armVal))) #play arm with highest posterior index
 
+
+
+
+
+
+
             """#*****************************************************
             TODO: this comment
             """#*****************************************************
             #SnP = bi2de(flip(state))+1;
             SnP = 9
+
+
+
+
+
+
+
 
 
 
@@ -292,6 +394,11 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
                 count = count+1
             else :
                 count = 1
+
+
+
+
+
 
             """#*****************************************************
             TODO: this comment
@@ -316,11 +423,22 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
             fullAct = ActionsList[bestArm,:]
             act[t,:] = fullAct
 
+
+
+
             """#*****************************************************
              TODO: this comment
             """#*****************************************************
             #collision[t] = CalculateReward(fullAct,state,bands);
             reward[t] = 0
+
+
+
+
+
+
+
+
 
 
 
