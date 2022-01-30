@@ -118,52 +118,47 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
         print("YEEEEEEEEEEEEEEEEEEEEEEEHAAAAAAAAAAAWWWWWWWWWWW")
         import numpy as np
 
-        bands = 5
+	bands = 5
 
 
-        valueList = list([x for x in range(0,(2**bands))])
-        finalList = []
+	valueList = list([x for x in range(0,(2**bands))])
+	finalList = []
 
-        for value in valueList:
-            binary = format(value, 'b')
-            while len(binary) < bands:
-                binary = '0' + binary
-            tempList = list([int(x) for x in binary])
+	for value in valueList:
+    		binary = format(value, 'b')
+    		while len(binary) < bands:
+        		binary = '0' + binary
+    			tempList = list([int(x) for x in binary])
 
-            finalList.append(tempList)
+	        finalList.append(tempList)
 
-        # Now final list has all binary intf values between
-        # [0,0,0,0,0] and [1,1,1,1,1]
-        finalList.reverse()
-        sequence = np.array(finalList[1:len(finalList)])
-        # print(sequence)
 
-        NumContigBands = []
-        for value in sequence:
+	finalList.reverse()
+	sequence = np.array(finalList[1:len(finalList)])
 
-            temp = [i+1 for i, e in enumerate(value) if e!= 0]
+
+	NumContigBands = []
+	for value in sequence:
+
+	    temp = [i+1 for i, e in enumerate(value) if e!= 0]
             temp = [0] + temp + [len(value)+1]
-            NumContigBands.append(max(np.diff(temp)-1))
-        # print(len(NumContigBands))
-        # print(NumContigBands)
-
-        finalList.reverse()
-
-        RowSum = [sum(value) for value in finalList[1:len(finalList)]]
-        # print(len(RowSum))
-        # print(RowSum)
-
-        IdxContiguousSequences = [1 if NumContigBands[i] == RowSum[i] else 0 for i in range(0,len(IdxContiguousSequences))]
-
-        print(IdxContiguousSequences)
-        
-        AllContiguousBands = [finalList[i] for i in range(1,len(finalList)-1) if IdxContiguousSequences[i] == 1]
-        AllContiguousBands.append([1]*bands)
+    	    NumContigBands.append(max(np.diff(temp)-1))
 
 
-        #for value in AllContiguousBands:
-           # print(value)
+	finalList.reverse()
 
+
+
+	RowSum = [sum(value) for value in finalList[1:len(finalList)]]
+
+
+	IdxContiguousSequences = [1 if NumContigBands[i] == RowSum[i] else 0 for i in range(0,len(RowSum))]
+
+
+	AllContiguousBands = []
+	for count, value in enumerate(IdxContiguousSequences):
+    		if value == 1:
+        		AllContiguousBands.append(finalList[count+1])
         return a + 2
     
 
