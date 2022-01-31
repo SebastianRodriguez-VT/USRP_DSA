@@ -116,22 +116,6 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
 
     def SelectOnlyContiguousBands(self, a):
         print("YEEEEEEEEEEEEEEEEEEEEEEEHAAAAAAAAAAAWWWWWWWWWWW")
-        import numpy as np
-
-	bands = 5
-
-
-	valueList = list([x for x in range(0,(2**bands))])
-	finalList = []
-
-	for value in valueList:
-    		binary = format(value, 'b')
-    		while len(binary) < bands:
-        		binary = '0' + binary
-    			tempList = list([int(x) for x in binary])
-
-	        finalList.append(tempList)
-
 
 	finalList.reverse()
 	sequence = np.array(finalList[1:len(finalList)])
@@ -448,7 +432,13 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
             #Update posterior dist
             B = B + np.transpose(context[bestArm,:])*context[bestArm,:]
             f = f + np.transpose(context[bestArm,:])*reward[t]
-            mu = f/B
+            # mu = B\f
+
+            f = [x for x in f]
+            # print(f)
+            # print(B)
+            mu = np.linalg.lstsq(B,f)[0]
+
 
             if t > 1:
                 loss[t] = loss[t-1] + (1-reward[t])
